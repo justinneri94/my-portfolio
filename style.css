@@ -71,6 +71,11 @@ body::before {
   justify-content: space-between;
 }
 
+.button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .buttons span {
   margin-left: 6px;
   cursor: pointer;
@@ -131,10 +136,14 @@ button.window-btn {
 .minimize { background: #e5e540; }
 .maximize { background: #4ae54a; }
 
-.window-btn:focus {
+.window-btn:focus,
+.close:focus,
+.minimize:focus,
+.maximize:focus {
   outline: none;
   box-shadow: none;
 }
+
 
 .window.minimized .window-content {
   display: none;
