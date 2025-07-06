@@ -53,6 +53,7 @@ body::before {
   box-shadow: 4px 4px 0 #0002;
   z-index: 2;
   user-select: none;
+  transition: all 0.3s ease;
 }
 
 .title-bar {
