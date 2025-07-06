@@ -17,6 +17,34 @@ document.querySelector('.minimize').addEventListener('click', () => {
   }, 200);
 });
 
+let isMaximized = false;
+const mainWindow = document.getElementById('main-window');
+
+document.querySelector('.maximize').addEventListener('click', () => {
+  if (!isMaximized) {
+    // Store current position & size
+    mainWindow.dataset.originalWidth = mainWindow.style.width || `${mainWindow.offsetWidth}px`;
+    mainWindow.dataset.originalHeight = mainWindow.style.height || `${mainWindow.offsetHeight}px`;
+    mainWindow.dataset.originalLeft = mainWindow.style.left || `${mainWindow.offsetLeft}px`;
+    mainWindow.dataset.originalTop = mainWindow.style.top || `${mainWindow.offsetTop}px`;
+
+    // Expand
+    mainWindow.style.width = '80vw';
+    mainWindow.style.height = '80vh';
+    mainWindow.style.left = '10vw';
+    mainWindow.style.top = '10vh';
+
+    isMaximized = true;
+  } else {
+    // Restore original
+    mainWindow.style.width = mainWindow.dataset.originalWidth;
+    mainWindow.style.height = mainWindow.dataset.originalHeight;
+    mainWindow.style.left = mainWindow.dataset.originalLeft;
+    mainWindow.style.top = mainWindow.dataset.originalTop;
+
+    isMaximized = false;
+  }
+});
 
 titleBar.style.cursor = "grab";
 
