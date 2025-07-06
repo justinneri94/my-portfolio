@@ -37,9 +37,11 @@ body::before {
   font-family: 'Monaco', monospace;
   z-index: 1000;
 }
+
 #splash.fade-out {
   animation: fadeOut 1s forwards;
 }
+
 @keyframes fadeOut {
   to { opacity: 0; visibility: hidden; }
 }
@@ -154,6 +156,7 @@ button.window-btn {
   transform: translateY(5px);
   transition: 0.2s ease;
 }
+
 .dock-icon:hover .tooltip {
   opacity: 1;
   transform: translateY(0);
