@@ -75,7 +75,9 @@ body::before {
 .window-content {
   padding: 18px;
   font-size: 15px;
+  overflow: auto;
 }
+
 
 .dock {
   position: fixed;
