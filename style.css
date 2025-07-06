@@ -45,26 +45,28 @@ body::before {
 }
 
 .window {
-  width: 340px;
-  background: #fff;
-  border: 2px solid #999;
   position: absolute;
-  border-radius: 12px;
-  box-shadow: 4px 4px 0 #0002;
-  z-index: 2;
+  width: 400px;
+  min-height: 60px;
+  background: #f3f3f3;
+  border: 2px solid #888;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #222;
   user-select: none;
+  z-index: 1;
   transition: all 0.3s ease;
 }
 
 .title-bar {
-  background: var(--color-aqua);
+  background: #e0e0e0;
   padding: 8px 12px;
   font-weight: bold;
-  display: flex;
-  justify-content: space-between;
   cursor: grab;
-  user-select: none;
-  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid #bbb;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .buttons span {
@@ -73,11 +75,20 @@ body::before {
 }
 
 .window-content {
-  padding: 18px;
-  font-size: 15px;
-  overflow: auto;
+  padding: 14px;
+  font-size: 14px;
+  color: #222;
+  display: block;
 }
 
+button.window-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: none;
+  margin-left: 6px;
+  cursor: pointer;
+}
 
 .dock {
   position: fixed;
@@ -109,8 +120,24 @@ body::before {
   position: relative;
   transition: transform 0.2s ease;
 }
+
 .dock-icon:hover {
   transform: scale(1.2);
+}
+
+.close { background: #e55; }
+.minimize { background: #e5e540; }
+.maximize { background: #4ae54a; }
+
+.window.minimized .window-content {
+  display: none;
+}
+
+.window.maximized {
+  width: 80vw !important;
+  height: 80vh !important;
+  left: 10vw !important;
+  top: 10vh !important;
 }
 
 .tooltip {
