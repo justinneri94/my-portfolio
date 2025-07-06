@@ -1,0 +1,77 @@
+
+:root {
+  --color-aqua: #39aaa7;
+  --color-sand: #ebe6dc;
+  --color-sunflower: #f3c740;
+  --color-blue: #23659f;
+  --color-text: #333;
+}
+
+body {
+  background: var(--color-sand);
+  color: var(--color-text);
+  font-family: 'Optima', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: url('https://i.imgur.com/8fK4h7V.png'); /* sample noise texture */
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
+
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--color-blue);
+  color: var(--color-sand);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Monaco', monospace;
+  z-index: 1000;
+}
+#splash.fade-out {
+  animation: fadeOut 1s forwards;
+}
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.window {
+  width: 340px;
+  background: #fff;
+  border: 2px solid #999;
+  position: absolute;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 #0002;
+  z-index: 2;
+  user-select: none;
+}
+
+.title-bar {
+  background: var(--color-aqua);
+  padding: 8px 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+  user-select: none;
+  border-radius: 12px 12px 0 0;
+}
+
+.buttons span {
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.window-content {
+  padding: 18px;
+  font-size: 15px;
+}
