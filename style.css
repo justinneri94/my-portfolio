@@ -131,6 +131,11 @@ button.window-btn {
 .minimize { background: #e5e540; }
 .maximize { background: #4ae54a; }
 
+.window-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .window.minimized .window-content {
   display: none;
 }
