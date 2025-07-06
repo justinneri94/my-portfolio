@@ -8,6 +8,16 @@ const minimizeBtn = windowEl.querySelector(".minimize");
 let isDragging = false;
 let offsetX, offsetY;
 
+// Minimize Button
+document.querySelector('.minimize').addEventListener('click', () => {
+  const win = document.getElementById('main-window');
+  win.style.opacity = '0';
+  setTimeout(() => {
+    win.style.display = 'none';
+  }, 200);
+});
+
+
 titleBar.style.cursor = "grab";
 
 titleBar.addEventListener("mousedown", (e) => {
