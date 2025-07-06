@@ -8,13 +8,11 @@ const content = windowEl.querySelector(".window-content");
 let isDragging = false;
 let offsetX, offsetY;
 let isMaximized = false;
-let isMinimized = false;
 
-// Dragging logic
+// --- DRAGGABLE WINDOW ---
 titleBar.style.cursor = "grab";
 
 titleBar.addEventListener("mousedown", (e) => {
-  if (isMaximized) return; // Disable dragging when maximized
   isDragging = true;
   titleBar.style.cursor = "grabbing";
   offsetX = e.clientX - windowEl.offsetLeft;
@@ -27,46 +25,47 @@ document.addEventListener("mouseup", () => {
 });
 
 document.addEventListener("mousemove", (e) => {
-  if (isDragging) {
+  if (isDragging && !isMaximized) {
     windowEl.style.left = `${e.clientX - offsetX}px`;
     windowEl.style.top = `${e.clientY - offsetY}px`;
   }
 });
 
-// Close button
+// --- CLOSE BUTTON ---
 closeBtn.addEventListener("click", () => {
   windowEl.style.display = "none";
 });
 
-// Minimize button — toggles only content
+// --- MINIMIZE BUTTON ---
 minimizeBtn.addEventListener("click", () => {
-  if (!isMinimized) {
-    content.style.display = "none";
-    isMinimized = true;
-  } else {
+  if (content.style.display === "none") {
     content.style.display = "block";
-    isMinimized = false;
+    windowEl.style.height = windowEl.dataset.originalHeight || "auto";
+  } else {
+    content.style.display = "none";
+    windowEl.dataset.originalHeight = windowEl.style.height;
+    windowEl.style.height = "40px";
   }
 });
 
-// Maximize button — toggle fullscreen style
+// --- MAXIMIZE BUTTON ---
 maximizeBtn.addEventListener("click", () => {
   if (!isMaximized) {
-    // Save current size & position
+    // Store original position/size
     windowEl.dataset.originalWidth = windowEl.style.width || `${windowEl.offsetWidth}px`;
     windowEl.dataset.originalHeight = windowEl.style.height || `${windowEl.offsetHeight}px`;
     windowEl.dataset.originalLeft = windowEl.style.left || `${windowEl.offsetLeft}px`;
     windowEl.dataset.originalTop = windowEl.style.top || `${windowEl.offsetTop}px`;
 
     // Maximize
-    windowEl.style.width = "80vw";
-    windowEl.style.height = "80vh";
-    windowEl.style.left = "10vw";
-    windowEl.style.top = "10vh";
+    windowEl.style.width = '80vw';
+    windowEl.style.height = '80vh';
+    windowEl.style.left = '10vw';
+    windowEl.style.top = '10vh';
 
     isMaximized = true;
   } else {
-    // Restore
+    // Restore original
     windowEl.style.width = windowEl.dataset.originalWidth;
     windowEl.style.height = windowEl.dataset.originalHeight;
     windowEl.style.left = windowEl.dataset.originalLeft;
@@ -76,7 +75,7 @@ maximizeBtn.addEventListener("click", () => {
   }
 });
 
-// Splash fade (optional)
+// Optional: Splash fade-out
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
   if (splash) {
