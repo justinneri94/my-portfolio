@@ -1,54 +1,20 @@
-
 const windowEl = document.getElementById("main-window");
 const titleBar = windowEl.querySelector(".title-bar");
 const closeBtn = windowEl.querySelector(".close");
 const maximizeBtn = windowEl.querySelector(".maximize");
 const minimizeBtn = windowEl.querySelector(".minimize");
+const content = windowEl.querySelector(".window-content");
 
 let isDragging = false;
 let offsetX, offsetY;
-
-// Minimize Button
-document.querySelector('.minimize').addEventListener('click', () => {
-  const win = document.getElementById('main-window');
-  win.style.opacity = '0';
-  setTimeout(() => {
-    win.style.display = 'none';
-  }, 200);
-});
-
 let isMaximized = false;
-const mainWindow = document.getElementById('main-window');
+let isMinimized = false;
 
-document.querySelector('.maximize').addEventListener('click', () => {
-  if (!isMaximized) {
-    // Store current position & size
-    mainWindow.dataset.originalWidth = mainWindow.style.width || `${mainWindow.offsetWidth}px`;
-    mainWindow.dataset.originalHeight = mainWindow.style.height || `${mainWindow.offsetHeight}px`;
-    mainWindow.dataset.originalLeft = mainWindow.style.left || `${mainWindow.offsetLeft}px`;
-    mainWindow.dataset.originalTop = mainWindow.style.top || `${mainWindow.offsetTop}px`;
-
-    // Expand
-    mainWindow.style.width = '80vw';
-    mainWindow.style.height = '80vh';
-    mainWindow.style.left = '10vw';
-    mainWindow.style.top = '10vh';
-
-    isMaximized = true;
-  } else {
-    // Restore original
-    mainWindow.style.width = mainWindow.dataset.originalWidth;
-    mainWindow.style.height = mainWindow.dataset.originalHeight;
-    mainWindow.style.left = mainWindow.dataset.originalLeft;
-    mainWindow.style.top = mainWindow.dataset.originalTop;
-
-    isMaximized = false;
-  }
-});
-
+// Dragging logic
 titleBar.style.cursor = "grab";
 
 titleBar.addEventListener("mousedown", (e) => {
+  if (isMaximized) return; // Disable dragging when maximized
   isDragging = true;
   titleBar.style.cursor = "grabbing";
   offsetX = e.clientX - windowEl.offsetLeft;
@@ -67,20 +33,53 @@ document.addEventListener("mousemove", (e) => {
   }
 });
 
+// Close button
 closeBtn.addEventListener("click", () => {
   windowEl.style.display = "none";
 });
 
+// Minimize button — toggles only content
 minimizeBtn.addEventListener("click", () => {
-  const content = windowEl.querySelector(".window-content");
-  content.style.display = content.style.display === "none" ? "block" : "none";
+  if (!isMinimized) {
+    content.style.display = "none";
+    isMinimized = true;
+  } else {
+    content.style.display = "block";
+    isMinimized = false;
+  }
 });
 
+// Maximize button — toggle fullscreen style
 maximizeBtn.addEventListener("click", () => {
-  windowEl.classList.toggle("fullscreen");
+  if (!isMaximized) {
+    // Save current size & position
+    windowEl.dataset.originalWidth = windowEl.style.width || `${windowEl.offsetWidth}px`;
+    windowEl.dataset.originalHeight = windowEl.style.height || `${windowEl.offsetHeight}px`;
+    windowEl.dataset.originalLeft = windowEl.style.left || `${windowEl.offsetLeft}px`;
+    windowEl.dataset.originalTop = windowEl.style.top || `${windowEl.offsetTop}px`;
+
+    // Maximize
+    windowEl.style.width = "80vw";
+    windowEl.style.height = "80vh";
+    windowEl.style.left = "10vw";
+    windowEl.style.top = "10vh";
+
+    isMaximized = true;
+  } else {
+    // Restore
+    windowEl.style.width = windowEl.dataset.originalWidth;
+    windowEl.style.height = windowEl.dataset.originalHeight;
+    windowEl.style.left = windowEl.dataset.originalLeft;
+    windowEl.style.top = windowEl.dataset.originalTop;
+
+    isMaximized = false;
+  }
 });
 
+// Splash fade (optional)
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
-  setTimeout(() => splash.classList.add('fade-out'), 1500);
+  if (splash) {
+    setTimeout(() => splash.classList.add('fade-out'), 1500);
+  }
 });
